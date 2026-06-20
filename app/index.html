@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Project Pulse Dashboard - Track project status, ownership, priority, and recent activity">
+    <title>Project Pulse</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="dashboard-header">
+        <h1>Project Pulse</h1>
+        <p class="dashboard-description">Track project status, ownership, priority, and recent activity</p>
+    </header>
+
+    <main class="dashboard">
+        <div id="project-container" class="project-list">
+            <p id="loading-message" class="loading-message">Loading projects...</p>
+        </div>
+        <div id="error-message" class="error-message" style="display: none;"></div>
+    </main>
+
+    <script>
+        async function loadProjects() {
+            const container = document.getElementById('project-container');
+            const errorDiv = document.getElementById('error-message');
+            const loadingMsg = document.getElementById('loading-message');
+
+            try {
+                const response = await fetch('project-data.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                if (!data.projects || !Array.isArray(data.projects)) {
+                    throw new Error('Invalid data structure: projects array not found');
+                }
+
+                if (data.projects.length === 0) {
+                    container.innerHTML = '<p class="empty-state">No projects available.</p>';
+                    loadingMsg.style.display = 'none';
+                    return;
+                }
+
+                container.innerHTML = '';
+                loadingMsg.style.display = 'none';
+
+                data.projects.forEach(project => {
+                    const card = createProjectCard(project);
+                    container.appendChild(card);
+                });
+
+                errorDiv.style.display = 'none';
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                loadingMsg.style.display = 'none';
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = `Error loading projects: ${error.message}`;
+                errorDiv.setAttribute('role', 'alert');
+            }
+        }
+
+        function createProjectCard(project) {
+            const article = document.createElement('article');
+            article.className = 'project-card';
+            article.setAttribute('data-status', project.status || 'Unknown');
+            article.setAttribute('data-priority', project.priority || 'Unknown');
+            article.setAttribute('aria-label', `Project: ${project.name}`);
+
+            const statusDate = project.recentActivity ? new Date(project.recentActivity).toLocaleDateString() : 'No date';
+
+            article.innerHTML = `
+                <h2 class="project-name">${escapeHtml(project.name)}</h2>
+                <div class="project-meta">
+                    <p class="project-owner">
+                        <span class="label">Owner:</span>
+                        <span class="value">${escapeHtml(project.owner || 'Unassigned')}</span>
+                    </p>
+                    <p class="project-status">
+                        <span class="label">Status:</span>
+                        <span class="status-badge" data-status="${project.status || 'Unknown'}">${escapeHtml(project.status || 'Unknown')}</span>
+                    </p>
+                    <p class="project-priority">
+                        <span class="label">Priority:</span>
+                        <span class="priority-indicator" data-priority="${project.priority || 'Unknown'}">${escapeHtml(project.priority || 'Unknown')}</span>
+                    </p>
+                    <p class="project-activity">
+                        <span class="label">Recent Activity:</span>
+                        <span class="value">${statusDate}</span>
+                    </p>
+                </div>
+                ${project.summary ? `<p class="project-summary">${escapeHtml(project.summary)}</p>` : ''}
+            `;
+
+            return article;
+        }
+
+        function escapeHtml(unsafe) {
+            const div = document.createElement('div');
+            div.textContent = unsafe;
+            return div.innerHTML;
+        }
+
+        // Load projects when DOM is ready
+        document.addEventListener('DOMContentLoaded', loadProjects);
+    </script>
+</body>
+</html>

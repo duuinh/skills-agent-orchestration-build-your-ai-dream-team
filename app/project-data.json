@@ -1,0 +1,67 @@
+{
+  "projects": [
+    {
+      "id": "project-001",
+      "name": "Dashboard Redesign",
+      "owner": "Sarah Chen",
+      "status": "Active",
+      "priority": "High",
+      "recentActivity": "2026-06-18",
+      "summary": "Complete redesign of the analytics dashboard with improved data visualization and responsive layout."
+    },
+    {
+      "id": "project-002",
+      "name": "Mobile App Development",
+      "owner": "Marcus Johnson",
+      "status": "Active",
+      "priority": "High",
+      "recentActivity": "2026-06-19",
+      "summary": "Native mobile application for iOS and Android platforms with offline-first architecture."
+    },
+    {
+      "id": "project-003",
+      "name": "API Gateway Migration",
+      "owner": "Elena Rodriguez",
+      "status": "On Hold",
+      "priority": "Medium",
+      "recentActivity": "2026-06-10",
+      "summary": "Migrate microservices to a modern API gateway infrastructure for improved scalability and security."
+    },
+    {
+      "id": "project-004",
+      "name": "Machine Learning Pipeline",
+      "owner": "Aditya Patel",
+      "status": "Planning",
+      "priority": "High",
+      "recentActivity": "2026-06-15",
+      "summary": "Build data processing pipeline for real-time model inference and performance monitoring."
+    },
+    {
+      "id": "project-005",
+      "name": "Legacy System Retirement",
+      "owner": "Jennifer Liu",
+      "status": "Completed",
+      "priority": "Medium",
+      "recentActivity": "2026-06-08",
+      "summary": "Successfully decommissioned legacy monolith and migrated all data to new microservices architecture."
+    },
+    {
+      "id": "project-006",
+      "name": "Security Audit & Compliance",
+      "owner": "David Okonkwo",
+      "status": "Active",
+      "priority": "High",
+      "recentActivity": "2026-06-20",
+      "summary": "Comprehensive security review and implementation of GDPR compliance requirements across all systems."
+    },
+    {
+      "id": "project-007",
+      "name": "Documentation Portal",
+      "owner": "Lisa Wang",
+      "status": "Active",
+      "priority": "Low",
+      "recentActivity": "2026-06-17",
+      "summary": "Build comprehensive knowledge base and API documentation platform for developers and support teams."
+    }
+  ]
+}
